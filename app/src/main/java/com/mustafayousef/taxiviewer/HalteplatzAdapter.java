@@ -33,9 +33,11 @@ public class HalteplatzAdapter extends RecyclerView.Adapter<HalteplatzAdapter.Ha
 
         Halteplatz currentHalteplatz = mHalteplaetze.get(position);
         String name = currentHalteplatz.getName();
-        int auftraege = currentHalteplatz.getAuftraege() ;
+        int auftraege = currentHalteplatz.getAuftraege();
         int einstiege = currentHalteplatz.getEinstiege();
-        String wartezeit = currentHalteplatz.getWartezeit();
+        String wartezeit = currentHalteplatz.getWartezeit().isEmpty()
+                ? "---"
+                : currentHalteplatz.getWartezeit();
 
         holder.name.setText(name);
         holder.auftraege.setText(Integer.toString(auftraege));
@@ -48,7 +50,7 @@ public class HalteplatzAdapter extends RecyclerView.Adapter<HalteplatzAdapter.Ha
         return mHalteplaetze.size();
     }
 
-    public class HalteplatzViewHolder extends RecyclerView.ViewHolder {
+    public static class HalteplatzViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
         public TextView auftraege;

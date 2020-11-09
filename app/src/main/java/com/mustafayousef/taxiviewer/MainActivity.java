@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -29,14 +30,12 @@ public class MainActivity extends AppCompatActivity {
     private HalteplatzAdapter mHalteplatzAdapter;
     private ArrayList<Halteplatz> mHalteplatzList;
     private RequestQueue mRequestQueue;
-    private FloatingActionButton btnRefresh;
-    // todo: implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnRefresh = findViewById(R.id.btnRefresh);
+        FloatingActionButton btnRefresh = findViewById(R.id.btnRefresh);
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -47,17 +46,26 @@ public class MainActivity extends AppCompatActivity {
         mHalteplatzList = new ArrayList<>();
 
         mRequestQueue = Volley.newRequestQueue(this);
-        parseJson();
+        parseJson(false);
 
+        btnRefresh.setOnClickListener(v -> {
+            mRequestQueue = Volley.newRequestQueue(this);
+            parseJson(true);
+        });
     }
 
-    private void parseJson() {
+    private void parseJson(boolean isUpdate) {
 
         String url = "http://192.168.2.131:8000/api/v1/halteplaetze";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
+
+                        if (isUpdate) {
+                            mHalteplatzList.clear();
+                        }
+
                         JSONArray stationsArray = response.getJSONArray("stations");
 
                         for (int i = 0; i < stationsArray.length(); i++) {
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 },
                 error -> {
                     error.printStackTrace();
+                    Toast.makeText(this, "Error sending the request", Toast.LENGTH_SHORT).show();
                 });
 
         request.setRetryPolicy(new DefaultRetryPolicy(
