@@ -15,6 +15,16 @@ public class HalteplatzAdapter extends RecyclerView.Adapter<HalteplatzAdapter.Ha
 
     private Context mContext;
     private ArrayList<Halteplatz> mHalteplaetze;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+
+    }
 
     public HalteplatzAdapter(Context context, ArrayList<Halteplatz> halteplatzList) {
         mContext = context;
@@ -50,7 +60,7 @@ public class HalteplatzAdapter extends RecyclerView.Adapter<HalteplatzAdapter.Ha
         return mHalteplaetze.size();
     }
 
-    public static class HalteplatzViewHolder extends RecyclerView.ViewHolder {
+    public class HalteplatzViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
         public TextView auftraege;
@@ -64,6 +74,18 @@ public class HalteplatzAdapter extends RecyclerView.Adapter<HalteplatzAdapter.Ha
             auftraege = itemView.findViewById(R.id.auftraege);
             einstiege = itemView.findViewById(R.id.einstiege);
             wartezeit = itemView.findViewById(R.id.wartezeit);
+
+            itemView.setOnClickListener(v -> {
+
+                if (mListener != null) {
+
+                    int position = getAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION) {
+                        mListener.onItemClick(position);
+                    }
+                }
+            });
         }
 
     }

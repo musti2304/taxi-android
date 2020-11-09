@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TaxiViewer</string>
+    <string name="app_name">Übersicht</string>
     <string name="hp_placeholder">Halteplatz</string>
     <string name="hp_name">Stadthalle</string>
     <string name="auftrag_placeholder">Auftrag</string>

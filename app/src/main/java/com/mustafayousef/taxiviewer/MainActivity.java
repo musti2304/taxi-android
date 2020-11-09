@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -23,13 +24,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HalteplatzAdapter.OnItemClickListener {
+
+    public static final String EXTRA_NAME = "name";
+    public static final String EXTRA_AUFTRAEGE = "auftraege";
+    public static final String EXTRA_EINSTIEGE = "einstiege";
+    public static final String EXTRA_WARTEZEIT = "wartezeit";
 
     private RecyclerView mRecyclerView;
     private HalteplatzAdapter mHalteplatzAdapter;
     private ArrayList<Halteplatz> mHalteplatzList;
+
     private RequestQueue mRequestQueue;
+
+//    private Timer autoUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,19 @@ public class MainActivity extends AppCompatActivity {
         mRequestQueue = Volley.newRequestQueue(this);
         parseJson(false);
 
+        // Deactivated for now
+/*        autoUpdate = new Timer();
+        autoUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+                    parseJson(true);
+                });
+            }
+        }, 0, 5000);*/
+
+
         btnRefresh.setOnClickListener(v -> {
             mRequestQueue = Volley.newRequestQueue(this);
             parseJson(true);
@@ -57,8 +81,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mRequestQueue = Volley.newRequestQueue(this);
-        parseJson(true);
+
+        // Deactivated for now
+/*        Timer autoUpdate = new Timer();
+        autoUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+                    parseJson(true);
+                });
+            }
+        }, 0, 5000);*/
+//        mRequestQueue = Volley.newRequestQueue(this);
+//        parseJson(true);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+        Intent detailIntent = new Intent(this, DetailActivity.class);
+        Halteplatz clickedHp = mHalteplatzList.get(position);
+
+        detailIntent.putExtra(EXTRA_NAME, clickedHp.getName());
+        detailIntent.putExtra(EXTRA_AUFTRAEGE, clickedHp.getAuftraege());
+        detailIntent.putExtra(EXTRA_EINSTIEGE, clickedHp.getEinstiege());
+        detailIntent.putExtra(EXTRA_WARTEZEIT, clickedHp.getWartezeit());
+
+//        autoUpdate.cancel();
+        startActivity(detailIntent);
+
     }
 
     private void parseJson(boolean isUpdate) {
@@ -97,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                 mHalteplatzList);
 
                         mRecyclerView.setAdapter(mHalteplatzAdapter);
+                        mHalteplatzAdapter.setOnItemClickListener(MainActivity.this);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
