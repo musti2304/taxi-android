@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TaxiViewer</string>
+    <string name="hp_placeholder">Halteplatz</string>
+    <string name="hp_name">Stadthalle</string>
+    <string name="auftrag_placeholder">Auftrag</string>
+    <string name="einstieg_placeholder">Einstieg</string>
+    <string name="warten_placeholder">Warten</string>
 </resources>

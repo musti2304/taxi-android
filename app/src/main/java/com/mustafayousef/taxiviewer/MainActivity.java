@@ -54,9 +54,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mRequestQueue = Volley.newRequestQueue(this);
+        parseJson(true);
+    }
+
     private void parseJson(boolean isUpdate) {
 
-        String url = "http://192.168.2.131:8000/api/v1/halteplaetze";
+        String url = "https://taxi-api-de.herokuapp.com/api/v1/halteplaetze";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {

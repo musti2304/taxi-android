@@ -9,22 +9,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="10"
             android:gravity="start|center"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:layout_weight="10">
+            android:padding="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Halteplatz"
                 android:layout_margin="2dp"
+                android:text="@string/hp_placeholder"
                 android:textSize="10sp" />
 
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="Stadthalle"
+                android:text="@string/hp_name"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -40,17 +40,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:layout_weight="1"
-            >
+            android:padding="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="Auftrag"
+                android:text="@string/auftrag_placeholder"
                 android:textSize="10sp" />
 
             <TextView
@@ -66,17 +65,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:layout_weight="1"
-            >
+            android:padding="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="Einstieg"
+                android:text="@string/einstieg_placeholder"
                 android:textSize="10sp" />
 
 
@@ -94,25 +92,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:layout_weight="1"
-            >
+            android:padding="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Warten"
                 android:layout_margin="2dp"
+                android:text="@string/warten_placeholder"
                 android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/wartezeit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0:30"
                 android:layout_margin="2dp"
+                android:text="0:30"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
         </LinearLayout>
